@@ -1,6 +1,9 @@
 package com.sql.dao;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+
+import com.sql.bean.DocumentsList;
 
 public abstract class DAO<T> {
 	protected Connection connect = null;
@@ -17,9 +20,9 @@ public abstract class DAO<T> {
 	
 	public abstract T find(String IdCote);
 	
-	public abstract T findAuteur(String cau);
+	public abstract ArrayList<DocumentsList> findAuteur(String cau);
 	
-	public abstract T findTitre(String cti);
+	public abstract ArrayList<DocumentsList> findTitre(String cti);
 	
 
 }

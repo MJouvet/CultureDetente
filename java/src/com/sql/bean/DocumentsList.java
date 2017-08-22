@@ -1,6 +1,6 @@
 package com.sql.bean;
 
-public class Document {
+public class DocumentsList {
 
 	private String IdCote = " ";
 	private String Titre = " ";
@@ -11,7 +11,7 @@ public class Document {
 	private int Caution;
 	
 	
-	public Document(String IdCote, String Titre, String Auteur, String typeDoc, String Genre, Boolean Disponible, int Caution) {
+	public DocumentsList(String IdCote, String Titre, String Auteur, String typeDoc, String Genre, Boolean Disponible, int Caution) {
 		this.IdCote = IdCote;
 		this.Titre = Titre;
 		this.Auteur = Auteur;
@@ -21,9 +21,9 @@ public class Document {
 		this.Caution = Caution;
 	}
 	
-	public Document(){};
+	public DocumentsList(){};
 	
-	public String getId() {
+	public String getIdCote() {
 		return IdCote;
 	}
 	

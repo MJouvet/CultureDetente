@@ -22,6 +22,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.sql.connection.SQLConnection;
 
+// ancien code qui n'utilise pas le pattern DAO
+
 public class biblio extends JFrame {
 
 	private JSplitPane split;
@@ -89,6 +91,7 @@ public class biblio extends JFrame {
 		try {
 			// la methode manuel
 			//con = DriverManager.getConnection("jdbc:mysql://localhost:8889/biblio","root","root");
+			
 			//en faisant appel au pattern singleton
 			con = SQLConnection.getInstance();
 			st = con.createStatement();
@@ -98,6 +101,7 @@ public class biblio extends JFrame {
 			while (rs.next()) {
 				//pour verifier si connexion BDD
 				//System.out.println(rs.getString("auteur") +" === "+rs.getString("titre"));
+				
 				jca.addItem(rs.getString("auteur"));
 				jct.addItem(rs.getString("titre"));
 				

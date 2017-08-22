@@ -2,38 +2,39 @@ package com.sql.dao.implement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 
 import com.mysql.jdbc.Connection;
-import com.sql.bean.Document;
+import com.sql.bean.DocumentsList;
 import com.sql.connection.SQLConnection;
 import com.sql.dao.DAO;
 
-public class DocumentDAO extends DAO<Document> {
+public class DocumentDAO extends DAO<DocumentsList> {
 	public DocumentDAO(Connection conn) {
 		super(SQLConnection.getInstance());
 	}
 
 	@Override
-	public boolean create(Document obj) {
+	public boolean create(DocumentsList obj) {
 		
 		return false;
 	}
 
 	@Override
-	public boolean delete(Document obj) {
+	public boolean delete(DocumentsList obj) {
 		
 		return false;
 	}
 
 	@Override
-	public boolean update(Document obj) {
+	public boolean update(DocumentsList obj) {
 		
 		return false;
 	}
 
 	@Override
-	public Document find(String IdCote) {
-		Document document = new Document();
+	public DocumentsList find(String IdCote) {
+		DocumentsList document = new DocumentsList();
 		
 		try {
 			ResultSet result = this.connect.createStatement(
@@ -41,7 +42,7 @@ public class DocumentDAO extends DAO<Document> {
 					ResultSet.CONCUR_READ_ONLY).executeQuery("Select * FROM Documents WHERE IdCote "
 							+ "= " + IdCote);
 			if (result.first()) {
-				document = new Document(
+				document = new DocumentsList(
 						IdCote,
 						result.getString("Titre"),
 						result.getString("Auteur"),
@@ -56,52 +57,73 @@ public class DocumentDAO extends DAO<Document> {
 		return document;
 	}
 	
-	public Document findAuteur(String cau) {
-		Document docAuteur = new Document();
+	public ArrayList<DocumentsList> findAuteur(String cau) {
 		
+		DocumentsList docAuteur = new DocumentsList();
+		
+		ArrayList<DocumentsList> listAuteur = new ArrayList<>();
+		
+		String sqlString;
+		if (cau!=null) {
+			 sqlString = "SELECT * FROM Documents WHERE Auteur ='"+cau+"' order by auteur";
+		} else {
+			 sqlString = "Select * from documents";
+		}
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("Select * FROM Documents WHERE Auteur "
-						+ "= "+cau);
-			if (result.first()) {
-				docAuteur = new Document(
+					ResultSet.CONCUR_READ_ONLY).executeQuery(sqlString);
+			while (result.next()) {
+				
+				//docAuteur = new Document(
+				listAuteur.add(new DocumentsList(		
 						result.getString("IdCote"),
 						result.getString("Titre"),
 						result.getString("Auteur"),
 						result.getString("typeDoc"), 
 						result.getString("Genre"), 
 						result.getBoolean("Disponible"), 
-						result.getInt("Caution")); 
+						result.getInt("Caution"))); 
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return docAuteur;
+		
+		return listAuteur;
 	}
 	
-	public Document findTitre(String cti) {
-		Document docTitre = new Document();
+	public ArrayList<DocumentsList> findTitre(String cti) {
+		DocumentsList docTitre = new DocumentsList();
 		
+		ArrayList<DocumentsList> listTitre = new ArrayList<>();
+		
+		String sqlString;
+		if (cti!=null) {
+			 sqlString = "Select * from documents where titre = "+cti ;
+		} else {
+			 sqlString = "Select * from documents";
+		}
 		try {
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("Select * FROM Documents WHERE Titre "
-							+ "= " + cti);
-			if (result.first()) {
-				docTitre = new Document(
+					ResultSet.CONCUR_READ_ONLY).executeQuery(sqlString);
+			while (result.next()) {
+				
+				//docTitre = new Document(
+				listTitre.add(new DocumentsList(		
 						result.getString("IdCote"),
 						result.getString("Titre"),
 						result.getString("Auteur"),
 						result.getString("typeDoc"), 
 						result.getString("Genre"), 
 						result.getBoolean("Disponible"), 
-						result.getInt("Caution")); 
+						result.getInt("Caution"))); 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return docTitre;
+		return listTitre;
 	}
 
 	

@@ -80,11 +80,11 @@ public class MyForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if (!(Pattern.matches("[a-zA-Z0-9._%+-]{2,}+[@]{1}+[a-zA-Z0-9]{2,}+[.]{1}+[a-zA-Z0-9]{2,}+$", email.getText()))) 
+        if (!(Pattern.matches("[a-zA-Z0-9._%+-]+[.]{1}+[a-zA-Z0-9._%+-]{2,}+[@]{1}+[a-zA-Z0-9]{2,}+[.]{1}+[a-zA-Z0-9]{2,}+$", email.getText()))) 
 { 
-    JOptionPane.showMessageDialog(null, "Merci de saisir une adresse mail valide", "Erreur", JOptionPane.ERROR_MESSAGE); 
+    JOptionPane.showMessageDialog(null, "Merci de saisir une adresse mail validée", "Erreur", JOptionPane.ERROR_MESSAGE); 
 } else {
-            JOptionPane.showMessageDialog(null, "L'adresse mail est valide", "BON!", JOptionPane.INFORMATION_MESSAGE); }
+            JOptionPane.showMessageDialog(null, "L'adresse mail est validée", "BON!", JOptionPane.INFORMATION_MESSAGE); }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

@@ -65,7 +65,7 @@ public class DocumentDAO extends DAO<DocumentsList> {
 		
 		String sqlString;
 		if (cau!=null) {
-			 sqlString = "SELECT * FROM Documents WHERE Auteur ='"+cau+"' order by auteur";
+			 sqlString = "SELECT * FROM Documents WHERE Auteur ='"+cau+"'";
 		} else {
 			 sqlString = "Select * from documents";
 		}
@@ -93,14 +93,15 @@ public class DocumentDAO extends DAO<DocumentsList> {
 		return listAuteur;
 	}
 	
+	// pour les titres
 	public ArrayList<DocumentsList> findTitre(String cti) {
-		DocumentsList docTitre = new DocumentsList();
+		
 		
 		ArrayList<DocumentsList> listTitre = new ArrayList<>();
 		
 		String sqlString;
 		if (cti!=null) {
-			 sqlString = "Select * from documents where titre = "+cti ;
+			 sqlString = "SELECT * FROM Documents WHERE titre ='"+cti+"'" ;
 		} else {
 			 sqlString = "Select * from documents";
 		}
@@ -125,7 +126,71 @@ public class DocumentDAO extends DAO<DocumentsList> {
 		}
 		return listTitre;
 	}
-
+	
+	public ArrayList<DocumentsList> getList(String lisA){
+		ArrayList<DocumentsList> listByAuteur = new ArrayList<>();
+		String sqlString;
+		if (lisA!=null) {
+			 sqlString = "SELECT * FROM Documents ";
+		} else {
+			 sqlString = "Select * from documents group by auteur";
+		}
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery(sqlString);
+			while (result.next()) {
+				
+				//docAuteur = new Document(
+				listByAuteur.add(new DocumentsList(		
+						result.getString("IdCote"),
+						result.getString("Titre"),
+						result.getString("Auteur"),
+						result.getString("typeDoc"), 
+						result.getString("Genre"), 
+						result.getBoolean("Disponible"), 
+						result.getInt("Caution"))); 
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listByAuteur;
+	}
+	public ArrayList<DocumentsList> getListG(String lisA){
+		ArrayList<DocumentsList> listByGenre = new ArrayList<>();
+		String sqlString;
+		if (lisA!=null) {
+			 sqlString = "SELECT * FROM Documents ";
+		} else {
+			 sqlString = "Select * from documents group by genre";
+		}
+		
+		try {
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery(sqlString);
+			while (result.next()) {
+				
+				//docAuteur = new Document(
+				listByGenre.add(new DocumentsList(		
+						result.getString("IdCote"),
+						result.getString("Titre"),
+						result.getString("Auteur"),
+						result.getString("typeDoc"), 
+						result.getString("Genre"), 
+						result.getBoolean("Disponible"), 
+						result.getInt("Caution"))); 
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listByGenre;
+	}
 	
 
 }
